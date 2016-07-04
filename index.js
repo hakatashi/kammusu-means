@@ -21,12 +21,19 @@ $(document).ready(function () {
 
 		var circleGroup = svg.append('g');
 		var centerGroup = svg.append('g');
+		var textGroup = svg.append('g');
 		var means = [];
 
 		var circles = circleGroup.selectAll('circle').data(json.nodes);
 
 		circles.enter().append('circle').attr('cx', 0).attr('cy', 0).attr('r', 10).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 1).style('transition', 'transform .5s ease').style('transform', function (data) {
 			return 'translate(' + (500 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
+		});
+
+		textGroup.selectAll('text').data(json.nodes).enter().append('text').attr('x', 0).attr('y', 0).attr('fill', 'white').text(function (data) {
+			return data.name;
+		}).style('transition', 'transform .5s ease').style('transform', function (data) {
+			return 'translate(' + (515 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
 		});
 
 		d3.select("#step").on('click', function () {
@@ -109,6 +116,10 @@ $(document).ready(function () {
 			circleGroup.selectAll('circle').style('transform', function (data) {
 				return 'translate(' + (500 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
 			}).attr('fill', 'white');
+
+			textGroup.selectAll('text').style('transform', function (data) {
+				return 'translate(' + (515 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
+			});
 
 			currentStep = 'E';
 		};
