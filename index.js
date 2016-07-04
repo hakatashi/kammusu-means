@@ -7,9 +7,12 @@ var d3 = require('d3');
 var distance = function distance(a, b) {
 	return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 };
+var translate = function translate(x, y) {
+	return 'translate(' + x + 'px, ' + y + 'px)';
+};
 
 $(document).ready(function () {
-	var svg = d3.select("#svg").attr('width', 1140).attr('height', 800).style('background', '#223344').style('cursor', 'pointer').style('-webkit-user-select', 'none').style('-khtml-user-select', 'none').style('-moz-user-select', 'none').style('-ms-user-select', 'none').style('user-select', 'none').on('click', function () {
+	var svg = d3.select("#svg").attr('viewBox', '0 0 800 800').attr('width', '100%').attr('height', '100%').style('background', '#223344').style('cursor', 'pointer').style('-webkit-user-select', 'none').style('-khtml-user-select', 'none').style('-moz-user-select', 'none').style('-ms-user-select', 'none').style('user-select', 'none').on('click', function () {
 		d3.event.preventDefault();
 	});
 
@@ -20,20 +23,20 @@ $(document).ready(function () {
 		if (error) throw error;
 
 		var circleGroup = svg.append('g');
-		var centerGroup = svg.append('g');
 		var textGroup = svg.append('g');
+		var centerGroup = svg.append('g');
 		var means = [];
 
 		var circles = circleGroup.selectAll('circle').data(json.nodes);
 
-		circles.enter().append('circle').attr('cx', 0).attr('cy', 0).attr('r', 10).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 1).style('transition', 'transform .5s ease').style('transform', function (data) {
-			return 'translate(' + (500 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
+		circles.enter().append('circle').attr('cx', 0).attr('cy', 0).attr('r', 5).attr('fill', 'white').attr('stroke', 'black').attr('stroke-width', 1).style('transition', 'transform .5s ease').style('transform', function (data) {
+			return translate(400 + data[xAxis] * 100, 400 - data[yAxis] * 100);
 		});
 
-		textGroup.selectAll('text').data(json.nodes).enter().append('text').attr('x', 0).attr('y', 0).attr('fill', 'white').text(function (data) {
+		textGroup.selectAll('text').data(json.nodes).enter().append('text').attr('x', 0).attr('y', 0).attr('fill', 'white').attr('dominant-baseline', 'central').text(function (data) {
 			return data.name;
-		}).style('transition', 'transform .5s ease').style('transform', function (data) {
-			return 'translate(' + (515 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
+		}).style('transition', 'transform .5s ease').style('font-size', '10px').style('transform', function (data) {
+			return translate(407 + data[xAxis] * 100, 400 - data[yAxis] * 100);
 		});
 
 		d3.select("#step").on('click', function () {
@@ -85,7 +88,7 @@ $(document).ready(function () {
 					});
 
 					var centers = centerGroup.selectAll('path').data(means).style('transform', function (data) {
-						return 'translate(' + (500 + data.x * 150) + 'px, ' + (400 - data.y * 150) + 'px) rotate(45deg)';
+						return translate(400 + data.x * 100, 400 - data.y * 100) + ' rotate(45deg)';
 					});
 
 					currentStep = 'E';
@@ -104,21 +107,21 @@ $(document).ready(function () {
 			}
 
 			var centers = centerGroup.selectAll('path').data(means).style('transform', function (data) {
-				return 'translate(' + (500 + data.x * 150) + 'px, ' + (400 - data.y * 150) + 'px) rotate(45deg)';
+				return translate(400 + data.x * 100, 400 - data.y * 100) + ' rotate(45deg)';
 			});
 
-			centers.enter().append('path').attr('d', 'M-5.366563145999495,-1.7888543819998317H-1.7888543819998317V-5.366563145999495H1.7888543819998317V-1.7888543819998317H5.366563145999495V1.7888543819998317H1.7888543819998317V5.366563145999495H-1.7888543819998317V1.7888543819998317H-5.366563145999495Z').attr('stroke', 'white').attr('fill', function (data) {
+			centers.enter().append('path').attr('d', d3.symbol().type(d3.symbolCross)).attr('stroke', 'white').attr('fill', function (data) {
 				return data.color;
 			}).style('transition', 'transform .5s ease').style('transform', function (data) {
-				return 'translate(' + (500 + data.x * 150) + 'px, ' + (400 - data.y * 150) + 'px) rotate(45deg)';
+				return translate(400 + data.x * 100, 400 - data.y * 100) + ' rotate(45deg)';
 			});
 
 			circleGroup.selectAll('circle').style('transform', function (data) {
-				return 'translate(' + (500 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
+				return translate(400 + data[xAxis] * 100, 400 - data[yAxis] * 100);
 			}).attr('fill', 'white');
 
 			textGroup.selectAll('text').style('transform', function (data) {
-				return 'translate(' + (515 + data[xAxis] * 150) + 'px, ' + (400 - data[yAxis] * 150) + 'px)';
+				return translate(407 + data[xAxis] * 100, 400 - data[yAxis] * 100);
 			});
 
 			currentStep = 'E';
