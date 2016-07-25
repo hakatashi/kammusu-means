@@ -187,7 +187,7 @@ $(document).ready(function () {
 							};
 
 							var sigmaSum = circleData.map(function (data) {
-								var vector = sub([[data.x], [data.y]], [[mu.x], [mu.y]]);
+								var vector = [[data.x - mu.x], [data.y - mu.y]];
 								return mul(data.gamma, dot(vector, transpose(vector)));
 							}).reduce(function (a, b) {
 								return add(a, b);
@@ -195,7 +195,7 @@ $(document).ready(function () {
 
 							var sigma = div(sigmaSum, gammaSum);
 
-							var pi = gammaSum / means.length;
+							var pi = gammaSum / circleData.length;
 
 							return { color: color, mu: mu, sigma: sigma, pi: pi };
 						});
