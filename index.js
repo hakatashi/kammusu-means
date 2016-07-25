@@ -272,11 +272,11 @@ $(document).ready(function () {
 
 			ellipseGroup.selectAll('ellipse').attr('fill', 'none').attr('stroke', function (data) {
 				return data.color;
-			}).attr('rx', function (data) {
+			}).transition().duration(500).attr('rx', function (data) {
 				return sigmaToEllipse(data.sigma).rx;
 			}).attr('ry', function (data) {
 				return sigmaToEllipse(data.sigma).ry;
-			}).style('transform', function (data) {
+			}).style('opacity', 1).style('transform', function (data) {
 				return translateData(data.mu.x, data.mu.y) + ' rotate(' + sigmaToEllipse(data.sigma).rotate + 'deg)';
 			});
 
