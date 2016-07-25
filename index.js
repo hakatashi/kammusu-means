@@ -236,7 +236,7 @@ $(document).ready(function () {
 
 				centerGroup.selectAll('path').data(means).enter().append('path');
 
-				ellipseGroup.selectAll('ellipse').transition().duration(300).style('opacity', 0).remove();
+				ellipseGroup.selectAll('ellipse').remove();
 			} else if (mode === 'em') {
 				for (var _i = 0; _i < 2; _i++) {
 					var sigma11 = Math.random() * 2;
