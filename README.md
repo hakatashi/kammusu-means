@@ -1,6 +1,8 @@
 [kammusu-means](https://hakatashi.github.io/kammusu-means/)
 =============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/hakatashi/kammusu-means.svg)](https://greenkeeper.io/)
+
 「K-means法」と「混合ガウス分布のEMアルゴリズム」をブラウザ上でビジュアライズするやつ
 
 [![Scren Shot](assets/screenshot.png)](https://hakatashi.github.io/kammusu-means/)
